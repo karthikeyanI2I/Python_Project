@@ -1,0 +1,21 @@
+{% extends 'todo_list/base.html' %}
+
+
+{% block content %}
+{% include 'todo_list/navbar_logout.html' %} 
+<h3>login</h3>
+<form action="" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+        <p>{{ field.label }}: <br> {{ field }}</p>
+    {% endfor %}
+    <button type="submit">Login</button>
+</form>
+{% if form.errors %}
+<div class="alert alert-danger">
+   username or password not correct..
+  </div>
+{% endif %}
+<p>Don't have an account? <a href="{% url 'register' %}">Signup here</a></p>
+
+{% endblock content %}

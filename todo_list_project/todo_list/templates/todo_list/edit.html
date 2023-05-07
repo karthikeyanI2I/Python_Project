@@ -1,0 +1,65 @@
+{% extends "todo_list/base.html" %}
+ 
+{% block title %}Add New To_do list Records{% endblock title %}
+ 
+{% block content %}
+{% include 'todo_list/navbar.html' %} 
+{% if user.is_authenticated %}
+<div class="col-md-12">
+   
+ <form method="POST" class="post-form" action="/update/{{todolist.id}}">  
+   {% csrf_token %}  
+  <div class="container">  
+ <br>  
+  <div class="form-group row">  
+  <label class="col-sm-1 col-form-label"></label>  
+  <div class="col-sm-4">  
+  <h3>Update Details</h3>  
+  </div>  
+   </div>  
+  <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">Id:</label>  
+  <div class="col-sm-4">  
+   <input type="text" class="form-control" name="id" id="id_id" required maxlength="20" value="{{ todolist.id }}"/>  
+  </div>  
+   </div>  
+   <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">Title:</label>  
+  <div class="col-sm-4">  
+   <input type="text" class="form-control" name="title" id="id_title" required maxlength="100" value="{{ todolist.title }}" />  
+  </div>  
+   </div>  
+  <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">Description:</label>  
+  <div class="col-sm-4"> 
+    <textarea class="form-control" id="id_description" rows="5" name="description" >{{ todolist.description }}</textarea>
+  </div>  
+   </div>  
+  <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">Due Date:</label>  
+  <div class="col-sm-4">  
+   <input type="date" class="form-control" name="duedate" id="id_contact" required maxlength="15" value="{{ todolist.duedate | date:'Y-m-d' }}" />  
+  </div>  
+   </div>  
+   <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Complete:</label>  
+    <div class="col-sm-4"> 
+     <input type="checkbox" class="form-check-input me-2" name="complete" {% if todolists.complete == 1 %} checked="checked" value="1" {% endif %}/>   
+    </div>  
+     </div> 
+  <div class="form-group row">  
+  <label class="col-sm-1 col-form-label"></label>  
+  <div class="col-sm-4">  
+  <button type="submit" class="btn btn-success btn-lg">Update</button>  
+  </div>  
+   </div>  
+  </div>  
+ </form>
+ {% else %}
+    <div class="alert alert-success" role="alert">
+        <h3>Welcome!</h3>
+        <a href="{% url 'register' %}">Signup</a>
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+{% endif %}  
+{% endblock content %}  

@@ -1,0 +1,47 @@
+
+{% extends "todo_list/base.html" %}
+ 
+{% block title %}To_do Task{% endblock title %}
+ 
+{% block content %}
+{% include 'todo_list/navbar.html' %} 
+{% if user.is_authenticated %}
+ <div class="col-md-12">
+        <span><a href="/addnew" class="btn btn-primary">Add New To_do Task</a></span>  
+        <div class="table-responsive">
+  <table id="bootstrapdatatable" class="table table-striped table-bordered" width="100%">
+            <thead>
+               
+                <th style="display:none;">ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Due Date</th>
+                <th>Complete</th>
+                <th>Edit</th>
+                <th>Delete</th>
+             </thead>
+   <tbody>
+   {% for todolist in todolists %}  
+    <tr>  
+     <td style="display:none;">{{ todolist.id }}</td>  
+     <td>{{ todolist.title }}</td>  
+     <td>{{ todolist.description }}</td>  
+     <td>{{ todolist.duedate }}</td>  
+     <td><input type="checkbox" disabled="disabled" {% if todolist.complete == 1 %} checked="checked" {% endif %} /></td>  
+     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a href="/edit/{{ todolist.id }}" class="btn btn-primary btn-xs" {% if todolist.complete == 1 %} disabled="disabled" {% endif %} data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></a></p></td>
+     <td><p data-placement="top" data-toggle="tooltip" title="Delete"><a href="/delete/{{ todolist.id }}" class="btn btn-danger btn-xs" {% if todolist.complete == 1 %} disabled="disabled" {% endif %} data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></a></p></td>  
+    </tr>  
+   {% endfor %} 
+   </tbody>
+         
+  </table>
+        </div>
+    </div>
+{% else %}
+    <div class="alert alert-success" role="alert">
+        <h3>Welcome!</h3>
+        <a href="{% url 'register' %}">Signup</a>
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+{% endif %}
+{% endblock content %}

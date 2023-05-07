@@ -1,0 +1,10 @@
+{% extends 'todo_list/base.html' %}
+
+{% block content %}
+{% include 'todo_list/navbar_logout.html' %} 
+    <br>
+    <div class="alert alert-success" role="alert">
+        <h2 style="text-align: center;">Logged out! <a href="{% url 'login' %}">ClickLogin</a> <br></h2>
+    </div>
+
+{% endblock content %}
