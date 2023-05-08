@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
+from django.http import HttpResponseNotFound
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from .forms import UserRegistrationForm
+from django.template.loader import render_to_string
 
 #views.py
 from django.shortcuts import render, redirect  
@@ -25,13 +27,18 @@ def addnew(request):
 
  
 def index(request):  
-    todolist = TodoTask.objects.order_by('duedate')
+    todolist = TodoTask.objects.filter(createuser=request.user.username).values()
     return render(request,"todo_list/show.html",{'todolists':todolist}) 
 
  
 def edit(request, id):  
-    todolist = TodoTask.objects.get(id=id)  
-    return render(request,'todo_list/edit.html', {'todolist':todolist}) 
+    try:
+        todolist = TodoTask.objects.get(id=id)  
+        return render(request,'todo_list/edit.html', {'todolist':todolist}) 
+    except:
+        response_data = render_to_string("todo_list/404.html")
+        return HttpResponseNotFound(response_data)
+
 
  
 def update(request, id):  
