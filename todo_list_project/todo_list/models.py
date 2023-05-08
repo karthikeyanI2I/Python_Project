@@ -5,6 +5,7 @@ class TodoTask(models.Model):
     description = models.TextField(max_length=400) 
     duedate = models.DateField()
     complete = models.BooleanField(default=False)
+    createuser =  models.CharField(max_length=100) 
   
     class Meta:  
         db_table = "todotask"
