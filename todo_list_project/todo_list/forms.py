@@ -8,11 +8,12 @@ from django.contrib.auth.models import User
 class TodoTaskForm(forms.ModelForm):  
     class Meta:  
         model = TodoTask  
-        fields = ['title', 'description', 'duedate', 'complete'] #https://docs.djangoproject.com/en/3.0/ref/forms/widgets/
+        fields = ['title', 'description', 'duedate', 'complete','createuser'] #https://docs.djangoproject.com/en/3.0/ref/forms/widgets/
         widgets = { 'title': forms.TextInput(attrs={ 'class': 'form-control' }), 
             'description': forms.Textarea(attrs={ 'class': 'form-control rounded-0','rows':'5' }),
             'duedate': forms.DateInput(attrs={ 'class': 'form-control','type' : 'date' }),
             'complete':forms.CheckboxInput(attrs={ 'class': 'form-check-input me-2' }),
+            'createuser':forms.TextInput(attrs={ 'class': 'form-control','value':User.username })
       }
 
 class UserRegistrationForm(UserCreationForm):
